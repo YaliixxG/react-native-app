@@ -19,18 +19,28 @@ class Movie extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            movieData: []
+            movieData: [],
+            movieOnData: []
         }
     }
 
     componentDidMount() {
-        this.movieList()
+        this.movieList(), this.movieOnList()
     }
 
     movieList = () => {
         axios.get($.movie).then(res => {
             this.setState({
                 movieData: (this.state.movieData = res.data.subjects)
+                // movieOnData: (this.state.movieOnData = res.data.subjects)
+            })
+        })
+    }
+
+    movieOnList = () => {
+        axios.get($.movieOn).then(res => {
+            this.setState({
+                movieOnData: (this.state.movieOnData = res.data.subjects)
             })
         })
     }
@@ -60,8 +70,38 @@ class Movie extends Component {
                         </View>
                     </Swiper>
                 </View>
+                <View style={styles.movieOnWrap}>
+                    <Text style={styles.movieTitle}>电影.正在热映</Text>
+                    <View style={styles.OnListItemWrap}>
+                        <FlatList
+                            data={this.state.movieOnData}
+                            keyExtractor={item => item.id}
+                            horizontal={true}
+                            renderItem={({ item }) => (
+                                <View style={styles.OnListItem}>
+                                    <Image
+                                        source={{
+                                            uri: item.images.small,
+                                            width: 100,
+                                            height: 100
+                                        }}
+                                    />
+                                    <View style={styles.movieSoonTxt}>
+                                        <Text
+                                            style={{
+                                                width: 100
+                                            }}
+                                        >
+                                            {item.title}
+                                        </Text>
+                                    </View>
+                                </View>
+                            )}
+                        />
+                    </View>
+                </View>
                 <View style={styles.movieListWrap}>
-                    <Text>电影.TOP250</Text>
+                    <Text style={styles.movieTitle}>电影.TOP20</Text>
                     <FlatList
                         data={this.state.movieData}
                         keyExtractor={item => item.id}
@@ -79,16 +119,10 @@ class Movie extends Component {
                                     <Text style={styles.item}>
                                         {item.original_title}
                                     </Text>
-                                    <Text style={styles.item}>
-                                        {item.title}
-                                    </Text>
-                                    <Text style={styles.item}>
-                                        {item.casts[0].name}
-                                    </Text>
-                                    <Text style={styles.item}>
-                                        {item.directors[0].name}
-                                    </Text>
-                                    <Text style={styles.item}>{item.year}</Text>
+                                    <Text>{item.title}</Text>
+                                    <Text>{item.casts[0].name}</Text>
+                                    <Text>{item.directors[0].name}</Text>
+                                    <Text>{item.year}</Text>
                                 </View>
                             </View>
                         )}
@@ -107,7 +141,8 @@ const styles = StyleSheet.create({
     },
     movieWrap: {
         width,
-        height
+        height,
+        flex: 1
     },
     itemlist: {
         flex: 1,
@@ -123,8 +158,32 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
     movieListWrap: {
+        flex: 2.2,
+        padding: 10
+    },
+    movieOnWrap: {
         flex: 1,
         padding: 10,
-        marginBottom: 50
+        marginBottom: 20
+    },
+    movieTitle: {
+        marginBottom: 10,
+        fontWeight: 'bold'
+    },
+    onListItemWrap: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    OnListItem: {
+        flex: 1,
+        marginRight: 10
+    },
+    imageBanner: {
+        width,
+        height: 250
+    },
+    movieSoonTxt: {
+        alignItems: 'center'
     }
 })
