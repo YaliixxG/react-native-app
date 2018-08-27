@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import {
-    Platform,
     StyleSheet,
     Text,
     View,
     Image,
     Dimensions,
-    FlatList
+    FlatList,
+    WebView,
+    TouchableOpacity
 } from 'react-native'
 import Swiper from 'react-native-swiper'
 import $ from '../util.js/api'
@@ -32,7 +33,6 @@ class Movie extends Component {
         axios.get($.movie).then(res => {
             this.setState({
                 movieData: (this.state.movieData = res.data.subjects)
-                // movieOnData: (this.state.movieOnData = res.data.subjects)
             })
         })
     }
@@ -54,18 +54,21 @@ class Movie extends Component {
                             <Image
                                 style={styles.imageBanner}
                                 source={require('../assets/images/slide1.jpg')}
+                                resizeMode="stretch"
                             />
                         </View>
                         <View style={styles.slide}>
                             <Image
                                 style={styles.imageBanner}
                                 source={require('../assets/images/slide2.jpg')}
+                                resizeMode="stretch"
                             />
                         </View>
                         <View style={styles.slide}>
                             <Image
                                 style={styles.imageBanner}
                                 source={require('../assets/images/slide3.jpg')}
+                                resizeMode="stretch"
                             />
                         </View>
                     </Swiper>
@@ -79,13 +82,25 @@ class Movie extends Component {
                             horizontal={true}
                             renderItem={({ item }) => (
                                 <View style={styles.OnListItem}>
-                                    <Image
-                                        source={{
-                                            uri: item.images.small,
-                                            width: 100,
-                                            height: 100
-                                        }}
-                                    />
+                                    <TouchableOpacity
+                                        onPress={() =>
+                                            this.props.navigation.navigate(
+                                                'Details',
+                                                {
+                                                    uri: item.alt
+                                                }
+                                            )
+                                        }
+                                    >
+                                        <Image
+                                            source={{
+                                                uri: item.images.small,
+                                                width: 100,
+                                                height: 100
+                                            }}
+                                            resizeMode="stretch"
+                                        />
+                                    </TouchableOpacity>
                                     <View style={styles.movieSoonTxt}>
                                         <Text
                                             style={{
@@ -106,25 +121,32 @@ class Movie extends Component {
                         data={this.state.movieData}
                         keyExtractor={item => item.id}
                         renderItem={({ item }) => (
-                            <View style={styles.itemlist}>
-                                <Image
-                                    style={styles.movieImg}
-                                    source={{
-                                        uri: item.images.small,
-                                        width: 60,
-                                        height: 100
-                                    }}
-                                />
-                                <View style={styles.movieTxt}>
-                                    <Text style={styles.item}>
-                                        {item.original_title}
-                                    </Text>
-                                    <Text>{item.title}</Text>
-                                    <Text>{item.casts[0].name}</Text>
-                                    <Text>{item.directors[0].name}</Text>
-                                    <Text>{item.year}</Text>
+                            <TouchableOpacity
+                                onPress={() =>
+                                    this.props.navigation.navigate('Details', {
+                                        uri: item.alt
+                                    })
+                                }
+                            >
+                                <View style={styles.itemlist}>
+                                    <Image
+                                        style={styles.movieImg}
+                                        source={{
+                                            uri: item.images.small
+                                        }}
+                                        resizeMode="stretch"
+                                    />
+                                    <View style={styles.movieTxt}>
+                                        <Text style={styles.item}>
+                                            {item.original_title}
+                                        </Text>
+                                        <Text>{item.title}</Text>
+                                        <Text>{item.casts[0].name}</Text>
+                                        <Text>{item.directors[0].name}</Text>
+                                        <Text>{item.year}</Text>
+                                    </View>
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                         )}
                     />
                 </View>

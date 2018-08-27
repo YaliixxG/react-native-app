@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Welcome from '../component/Welcome'
-// import Home from './Home'
+import Details from './Details'
 import Movie from './Movie'
 import Book from './Book'
 import Activity from './Activity'
@@ -122,7 +122,8 @@ const AppHome = createStackNavigator({
     },
     Activity: {
         screen: Activity
-    }
+    },
+    Details: { screen: Details }
 })
 
 const Router = createStackNavigator(
