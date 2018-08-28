@@ -5,7 +5,9 @@ import {
     Text,
     View,
     Image,
-    Dimensions
+    FlatList,
+    Dimensions,
+    TouchableOpacity
 } from 'react-native'
 import Swiper from 'react-native-swiper'
 import $ from '../util.js/api'
@@ -17,7 +19,9 @@ const height = Dimensions.get('window').height
 class Activity extends Component {
     constructor(props) {
         super(props)
-        this.movieData = []
+        this.state = {
+            activeData: []
+        }
     }
 
     componentWillMount() {
@@ -25,10 +29,9 @@ class Activity extends Component {
     }
 
     activeList = () => {
-        axios.get($.movie).then(res => {
-            console.log(res)
+        axios.get($.active).then(res => {
             this.setState({
-                movieData: (this.movieData = res.data.subjects)
+                activeData: (this.activeData = res.data.events)
             })
         })
     }
@@ -36,28 +39,35 @@ class Activity extends Component {
     render() {
         return (
             <View style={styles.activityWrap}>
-                <View style={styles.container}>
-                    <Swiper style={styles.wrapper} autoplay>
-                        <View style={styles.slide}>
-                            <Image
-                                style={styles.imageBanner}
-                                source={require('../assets/images/slide1.jpg')}
-                            />
+                <View style={styles.activityWrap} />
+                <FlatList
+                    data={this.state.activeData}
+                    keyExtractor={item => item.id}
+                    horizontal={true}
+                    renderItem={({ item }) => (
+                        <View style={styles.actItem}>
+                            <TouchableOpacity
+                                onPress={() =>
+                                    this.props.navigation.navigate('Details', {
+                                        uri: item.alt
+                                    })
+                                }
+                            >
+                                <Image
+                                    source={{
+                                        uri: item.image,
+                                        width: 140,
+                                        height: 160
+                                    }}
+                                    resizeMode="stretch"
+                                />
+                            </TouchableOpacity>
+                            <View>
+                                <Text style={styles.actText}>{item.title}</Text>
+                            </View>
                         </View>
-                        <View style={styles.slide}>
-                            <Image
-                                style={styles.imageBanner}
-                                source={require('../assets/images/slide2.jpg')}
-                            />
-                        </View>
-                        <View style={styles.slide}>
-                            <Image
-                                style={styles.imageBanner}
-                                source={require('../assets/images/slide3.jpg')}
-                            />
-                        </View>
-                    </Swiper>
-                </View>
+                    )}
+                />
             </View>
         )
     }
@@ -66,19 +76,19 @@ class Activity extends Component {
 export default Activity
 
 const styles = StyleSheet.create({
-    container: {
-        height: 250
-    },
     activityWrap: {
-        width,
-        height
-    },
-    itemlist: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        flexWrap: 'wrap',
+        padding: 10
     },
-    movieListWrap: {
-        flex: 1
+    actItem: {
+        width: 140,
+        height: 200
+    },
+    actText: {
+        width: 140,
+        height: 40
     }
 })
