@@ -95,8 +95,8 @@ class Movie extends Component {
                                         <Image
                                             source={{
                                                 uri: item.images.small,
-                                                width: 100,
-                                                height: 100
+                                                width: 140,
+                                                height: 160
                                             }}
                                             resizeMode="stretch"
                                         />
@@ -104,7 +104,8 @@ class Movie extends Component {
                                     <View style={styles.movieSoonTxt}>
                                         <Text
                                             style={{
-                                                width: 100
+                                                width: 140,
+                                                height: 160
                                             }}
                                         >
                                             {item.title}
@@ -199,7 +200,8 @@ const styles = StyleSheet.create({
     },
     OnListItem: {
         flex: 1,
-        marginRight: 10
+        marginRight: 10,
+        height: 200
     },
     imageBanner: {
         width,

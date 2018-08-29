@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         flexWrap: 'wrap',
-        padding: 20
+        padding: 10
     },
     actItem: {
         flex: 1,
