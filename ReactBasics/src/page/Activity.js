@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {
-    Platform,
     StyleSheet,
     Text,
     View,
@@ -9,12 +8,8 @@ import {
     Dimensions,
     TouchableOpacity
 } from 'react-native'
-import Swiper from 'react-native-swiper'
 import $ from '../util.js/api'
 import axios from 'axios'
-
-const width = Dimensions.get('window').width
-const height = Dimensions.get('window').height
 
 class Activity extends Component {
     constructor(props) {
@@ -39,11 +34,11 @@ class Activity extends Component {
     render() {
         return (
             <View style={styles.activityWrap}>
-                <View style={styles.activityWrap} />
                 <FlatList
                     data={this.state.activeData}
                     keyExtractor={item => item.id}
-                    horizontal={true}
+                    horizontal={false}
+                    numColumns={3}
                     renderItem={({ item }) => (
                         <View style={styles.actItem}>
                             <TouchableOpacity
@@ -81,14 +76,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         flexWrap: 'wrap',
-        padding: 10
+        padding: 20
     },
     actItem: {
+        flex: 1,
         width: 140,
-        height: 200
+        height: 260
     },
     actText: {
         width: 140,
-        height: 40
+        height: 100
     }
 })
