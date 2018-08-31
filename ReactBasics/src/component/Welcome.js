@@ -8,7 +8,7 @@ class Welcome extends Component {
 
     goHome = () => {
         setTimeout(_ => {
-            this.props.navigation.navigate('App')
+            this.props.navigation.navigate('Login')
         }, 2000)
     }
     render() {

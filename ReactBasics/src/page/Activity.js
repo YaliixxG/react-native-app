@@ -11,6 +11,8 @@ import {
 import $ from '../util.js/api'
 import axios from 'axios'
 
+const width = Dimensions.get('window').width
+
 class Activity extends Component {
     constructor(props) {
         super(props)

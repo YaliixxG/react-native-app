@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Welcome from '../component/Welcome'
+import Login from '../component/Login'
 import Details from './Details'
 import Movie from './Movie'
 import Book from './Book'
@@ -130,6 +131,13 @@ const Router = createStackNavigator(
     {
         Welcome: {
             screen: Welcome,
+            navigationOptions: {
+                //清空则没有回退键
+                header: null
+            }
+        },
+        Login: {
+            screen: Login,
             navigationOptions: {
                 //清空则没有回退键
                 header: null
