@@ -13,11 +13,11 @@ import {
 class Welcome extends Component {
     constructor(props) {
         super(props)
-        this.nameTxt = '529008421'
-        this.pswTxt = '123456789'
+        this.nameTxt = 'admin'
+        this.pswTxt = '123'
     }
     isCanlogin = (nameTxt, pswTxt) => {
-        if (this.nameTxt == '529008421' && this.pswTxt == '123456789')
+        if (this.nameTxt == 'admin' && this.pswTxt == '123')
             this.props.navigation.navigate('App')
         else ToastAndroid.show('登录信息错误', ToastAndroid.SHORT)
     }
@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
     input: {
         width: 200,
         height: 40,
-        fontSize: 16,
-        color: '#222', //输入框输入的文本为白色
+        // fontSize: 16,
+        // color: '#222', //输入框输入的文本为白色
         borderWidth: 1,
         margin: 10,
         borderRadius: 5
@@ -100,8 +100,8 @@ const styles = StyleSheet.create({
     sb: {
         width: 200,
         height: 40,
-        fontSize: 16,
-        color: '#222', //输入框输入的文本为白色
+        // fontSize: 16,
+        // color: '#222', //输入框输入的文本为白色
         margin: 10,
         borderColor: '#841584'
     },

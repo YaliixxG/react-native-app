@@ -86,7 +86,7 @@ const TabBottom = createBottomTabNavigator(
             },
             //tab bar的文本样式
             labelStyle: {
-                fontSize: 11,
+                // fontSize: 11,
                 margin: 1
             },
             tabStyle: {
